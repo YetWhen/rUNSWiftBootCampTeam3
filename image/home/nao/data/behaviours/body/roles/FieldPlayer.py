@@ -1,7 +1,12 @@
 import robot
 from importlib import import_module
 from util.Vector2D import Vector2D
+import time
+from body.skills.Crouch import Crouch
+from body.skills.RaiseArm import RaiseArm
+from math import floor
 from BehaviourTask import BehaviourTask
+from body.skills.WalkInCircle import WalkInCircle
 from body.skills.Stand import Stand
 from util.Constants import FIELD_LENGTH, PENALTY_AREA_LENGTH, CENTER_CIRCLE_DIAMETER, LEDColour
 
@@ -19,13 +24,22 @@ class FieldPlayer(BehaviourTask):
     def _initialise_sub_tasks(self):
         self._sub_tasks = {
             "Stand": Stand(self),
+            "Crouch": Crouch(self),
+            "RaiseArm": RaiseArm(self),
+            "WalkInCircle": WalkInCircle(self)
         }
 
     def _reset(self):
+        self._time = time.time()
         self._current_sub_task = "Stand"
 
     def _transition(self):
-        pass
+        if (floor(time.time() - self._time) % 2 == 0):
+            self._current_sub_task = "Crouch"
+        elif (floor(time.time() - self._time) % 3 == 0):
+            self._current_sub_task = "RaiseArm"
+        else:
+            self._current_sub_task = "WalkInCircle"
 
     def _tick(self):
         # Tick sub task!
