@@ -33,7 +33,7 @@ class FieldPlayer(BehaviourTask):
         }
 
     def _reset(self):
-        self._current_sub_task = "WalkInCircle"
+        self._current_sub_task = "Stand"
 
     def _transition(self):
         '''if time.time()-self.start_time <= self.timespan:
@@ -44,7 +44,8 @@ class FieldPlayer(BehaviourTask):
             self._current_sub_task = "WalkInCircle"
         '''
         #self._current_sub_task = "ApproachBall"
-        self._current_sub_task = "WalkInLine"
+        #self._current_sub_task = "WalkInLine"
+        pass
 
     def _tick(self):
         # Tick sub task!

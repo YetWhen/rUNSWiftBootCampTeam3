@@ -21,6 +21,6 @@ class MainHeadSkill(BehaviourTask):
 
     def _transition(self):
         if penalised():
-            self._current_sub_task = "TrackBall"
+            self._current_sub_task = "Centre"
         else:
             self._current_sub_task = "TrackBall"
