@@ -186,7 +186,9 @@ class ApproachBall(BehaviourTask):
         if use_line_up_map:
             # divide ballRelPos by 10 to get map x and y positions
             mapPos = ballRelPos().scale(0.1)
-
+            print("ballRelPos: ")
+            print(ballRelPos())
+            #robot.say(ballRelPos())
             # If foot is right,then invert y sign to match the map coordinates
             if kick_foot is Foot.RIGHT:
                 mapPos.y = -1 * mapPos.y
