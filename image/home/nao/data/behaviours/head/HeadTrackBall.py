@@ -15,7 +15,7 @@ class HeadTrackBall(BehaviourTask):
     def _reset(self):
         self.PITCH_BEHIND = radians(0)
         self.PITCH_CLOSE = radians(19 + self.world.blackboard.kinematics.parameters.cameraPitchBottom)
-        self.PITCH_FAR = radians(19 + self.world.blackboard.kinematics.parameters.cameraPitchBottom)
+        self.PITCH_FAR = radians(19*2 + self.world.blackboard.kinematics.parameters.cameraPitchBottom)
         self._current_sub_task = "HeadFixedYawAndPitch"
 
     def _tick(self):
