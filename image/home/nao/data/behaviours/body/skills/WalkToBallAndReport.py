@@ -50,11 +50,11 @@ class ApproachBall(BehaviourTask):
     def _transition(self):
         #if the first time go into the CircleReport, first time approach to the ball
         #shift to Point, to raise the arm to point to the ball
-        if self._current_sub_task = "CircleReport" and not self._ArmRaised:
+        if self._current_sub_task == "CircleReport" and not self._ArmRaised:
             self._current_sub_task = "Point"
             self._armTimer.start()
         #when the arm raising is finished, switch back to CircleReport, turn on the flag
-        elif self._current_sub_task = "Point" and self._armTimer.finished()
+        elif self._current_sub_task == "Point" and self._armTimer.finished()
             self._current_sub_task = "CircleReport"
             self._ArmRaised = True
 
