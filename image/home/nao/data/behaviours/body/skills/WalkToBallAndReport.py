@@ -11,8 +11,11 @@ from body.skills.WalkStraightToPose import WalkStraightToPose
 from body.skills.CircleToPose import CircleToPose
 from body.skills.CircleReport import CircleReport
 from body.skills.PointBall import PointBall
+from body.skills.Stand import Stand
 from robot import Foot
+import robot
 from util.ObstacleAvoidance import calculate_tangent_point
+from util.Timer import Timer
 
 # from util import LedOverride
 # from util.Constants import LEDColour
@@ -24,9 +27,10 @@ ANGLE_CLOSE = radians(30)  # rad
 ANGLE_NOT_CLOSE = radians(40)  # rad
 
 
-class ApproachBall(BehaviourTask):
+class WalkToBallAndReport(BehaviourTask):
     line_up_data, line_up_max_x, line_up_max_y = LineUpDataReader.readData("line_up_data.lud")
     _ArmRaised = False
+    _Stabled = False
 
     def _initialise_sub_tasks(self):
         self._sub_tasks = {
@@ -36,27 +40,32 @@ class ApproachBall(BehaviourTask):
             "CircleReport": CircleReport(self),
             "TangentialWalk": WalkStraightToPose(self),
             "Point": PointBall(self),
+            "Stand": Stand(self),
         }
 
     def _reset(self):
         self._current_sub_task = "Unobstructed"
-
         self.close = False
         self.position_aligned = False  # The kick_foot's position is colinear \
         # with the kick_target and ball
         self.heading_aligned = False  # The robot is facing kick_target
-        self._armTimer = Timer(timeTarget=500000)
+        self._armTimer = Timer(timeTarget=1000000)
 
     def _transition(self):
         #if the first time go into the CircleReport, first time approach to the ball
         #shift to Point, to raise the arm to point to the ball
-        if self._current_sub_task == "CircleReport" and not self._ArmRaised:
-            self._current_sub_task = "Point"
+        if self._current_sub_task == "CircleReport" and not self._Stabled:
+            self._current_sub_task = "Stand"
+            self._Stabled = True
             self._armTimer.start()
-        #when the arm raising is finished, switch back to CircleReport, turn on the flag
-        elif self._current_sub_task == "Point" and self._armTimer.finished()
-            self._current_sub_task = "CircleReport"
+        elif self._current_sub_task == "Stand" and self._armTimer.finished():
+            self._current_sub_task = "Point"
             self._ArmRaised = True
+            self._armTimer.start()
+        elif self._current_sub_task == "Point" and self._armTimer.finished():
+            self._current_sub_task = "CircleReport"
+        
+      
 
     # TODO: include a slow param in penalty
     def _tick(
@@ -133,6 +142,7 @@ class ApproachBall(BehaviourTask):
                 # If we're not facing the correct direction,
                 '''which is always the case since there's no target info in this task'''
                 self._current_sub_task = "CircleReport"
+                #self._current_sub_task = "Stand" #debug
 
         elif self._current_sub_task == "TangentialWalk":
             # If its closer to walk to kick position than to a tangent
@@ -143,6 +153,7 @@ class ApproachBall(BehaviourTask):
             elif tangent_length < evade_distance:
                 # If we're not facing the correct direction,
                 self._current_sub_task = "CircleReport"
+                #self._current_sub_task = "Stand" #debug
 
         # Tick sub task
         if self._current_sub_task == "Unobstructed":

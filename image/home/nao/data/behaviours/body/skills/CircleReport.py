@@ -28,7 +28,7 @@ class CircleReport(BehaviourTask):
     """
 
     # This walk speed is for calculations and not passed to the walk function. mm/s
-    WALK_SPEED = 70 #300
+    WALK_SPEED = 100 #300
 
     HEADING_CLOSE = radians(3)
     DISTANCE_CLOSE = 30
@@ -57,11 +57,38 @@ class CircleReport(BehaviourTask):
         
 
         # 3. Calculate turn rate --------------------moved to end
+        turn_diff = angleSignedDiff(final_heading, myHeading())
+        if abs(turn_diff) < self.HEADING_CLOSE:
+            turn_rate = 0
+        else:
+            # If we are more than 90 degrees off to our final heading,
+            # Turn in the direction that allows us to keep the circle centre
+            # in sight.
+            # This is useful as objects we want to face and observe are
+            # usually at the centre of the avoidance circle.
+            if turn_diff > abs(radians(90)):
+                to_centre_heading = circle_centre.minus(myPos()).heading()
+                angle_to_face_centre = angleSignedDiff(to_centre_heading, myHeading())
+                if angle_to_face_centre > 0:
+                    clockwise_turn = False
+                else:
+                    clockwise_turn = True
+
+                # ensure we're spinning in the direction specified,
+                # unless one way is a lot closer
+                if clockwise_turn:
+                    turn_diff -= 2 * pi
+                elif not clockwise_turn:
+                    turn_diff += 2 * pi
+
+            # calculate turn rate
+            time_needed_to_circle = 1.0 #assuming s
+            turn_rate = turn_diff / time_needed_to_circle
 
         # 4. Calculate circular move vector, using current radius
         circle_clockwise = True
         circular_move_vector = Vector2D(self.WALK_SPEED, 0).rotate(
-            tangent_heading(myPos(), circle_centre, circle_clockwise) #-----------what does this do
+            tangent_heading(myPos(), circle_centre, circle_clockwise)
         )
         circular_move_vector.rotate(-myHeading())
 
@@ -80,6 +107,6 @@ class CircleReport(BehaviourTask):
         # 7. Use some avoidance, if necessary
         move_vector = walk_vec_with_avoidance(move_vector)
 
-        turn_rate = move_vector.y / current_radius
+        #turn_rate = move_vector.x / current_radius
 
         self._tick_sub_task(move_vector.x, move_vector.y, turn_rate, speed=speed)
