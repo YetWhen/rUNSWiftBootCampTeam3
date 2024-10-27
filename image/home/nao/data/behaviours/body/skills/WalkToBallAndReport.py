@@ -58,11 +58,11 @@ class WalkToBallAndReport(BehaviourTask):
             self._current_sub_task = "Stand"
             self._Stabled = True
             self._armTimer.start()
-        elif self._current_sub_task == "Stand" and self._armTimer.finished() and not self._ArmRaised:
+        elif self._current_sub_task == "Stand" and self._armTimer.finished() and self._Stabled not self._ArmRaised:
             self._current_sub_task = "Point"
             self._ArmRaised = True
             self._armTimer.start()
-        elif self._current_sub_task == "Point" and self._armTimer.finished():
+        elif self._current_sub_task == "Point" and self._armTimer.finished() and self._ArmRaised:
             self._current_sub_task = "CircleReport"
         
       
