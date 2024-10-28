@@ -39,12 +39,13 @@ class CircleReport(BehaviourTask):
     def _reset(self):
         self._current_sub_task = "Walk"
 
+    '''
     def _transition(self):
         #try this first, if there's no duplicate, keep that
         #if duplicate, add a timer and track the timer and _begun_speaking flag, move to WalkToBallAndReport
         s = "I found the ball"
         robot.say(s)
-
+    '''
     def _tick(
         self, target_radius=400, circle_centre=Vector2D(0, 0), speed=0.5
     ):
@@ -56,7 +57,7 @@ class CircleReport(BehaviourTask):
         # 2. Calculate time needed to circle around NO NEED, NO STOP
         
 
-        # 3. Calculate turn rate --------------------moved to end
+        # 3. Calculate turn rate 
         turn_diff = angleSignedDiff(final_heading, myHeading())
         if abs(turn_diff) < self.HEADING_CLOSE:
             turn_rate = 0
@@ -108,5 +109,6 @@ class CircleReport(BehaviourTask):
         move_vector = walk_vec_with_avoidance(move_vector)
 
         #turn_rate = move_vector.x / current_radius
-
+        s = "I found the ball"
+        robot.say(s)
         self._tick_sub_task(move_vector.x, move_vector.y, turn_rate, speed=speed)
