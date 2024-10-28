@@ -58,7 +58,7 @@ class WalkToBallAndReport(BehaviourTask):
             self._current_sub_task = "Stand"
             self._Stabled = True
             self._armTimer.start()
-        elif self._current_sub_task == "Stand" and self._armTimer.finished() and self._Stabled not self._ArmRaised:
+        elif self._current_sub_task == "Stand" and self._armTimer.finished() and self._Stabled and not self._ArmRaised:
             self._current_sub_task = "Point"
             self._ArmRaised = True
             self._armTimer.start()
@@ -160,7 +160,7 @@ class WalkToBallAndReport(BehaviourTask):
             self._tick_sub_task(final_pos=kick_position, final_heading=ball_vector.heading(), speed=1.0)
         elif self._current_sub_task == "CircleReport":
             self._tick_sub_task(
-                target_radius= 300, circle_centre=ball, speed=1.0
+                final_heading=ball_vector.heading(), target_radius= 300,  circle_centre=ball, speed=1.0
             )
         elif self._current_sub_task == "TangentialWalk":
             self._tick_sub_task(final_pos=tangent_point, final_heading=tangent_walk_final_heading, speed=1.0)

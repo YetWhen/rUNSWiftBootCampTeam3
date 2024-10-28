@@ -21,7 +21,6 @@ class CircleReport(BehaviourTask):
       radius)
     - Robot's heading changes at a constant rate (to achieve final heading)
     The resulting motion ends up being a spiral shape, around the centre.
-
     NOTE:
     - Ensure any changes are well-tested, as this is a complicated skill,
     - Relies on the walk velocities being accurately executed by motion.
@@ -47,7 +46,7 @@ class CircleReport(BehaviourTask):
         robot.say(s)
     '''
     def _tick(
-        self, target_radius=400, circle_centre=Vector2D(0, 0), speed=0.5
+        self,final_position=Vector2D(-1000, 0), final_heading=radians(0), target_radius=400, circle_centre=Vector2D(0, 0), speed=0.5
     ):
         # 1. Calculate some useful information first
         centre_to_my_pos = myPos().minus(circle_centre)
@@ -55,7 +54,7 @@ class CircleReport(BehaviourTask):
         final_radius = target_radius
 
         # 2. Calculate time needed to circle around NO NEED, NO STOP
-        
+
 
         # 3. Calculate turn rate 
         turn_diff = angleSignedDiff(final_heading, myHeading())
