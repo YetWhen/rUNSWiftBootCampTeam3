@@ -8,6 +8,7 @@ from math import floor
 from BehaviourTask import BehaviourTask
 from body.skills.WalkInCircle import WalkInCircle
 from body.skills.Stand import Stand
+from body.skills.Kick import Kick
 from util.Constants import FIELD_LENGTH, PENALTY_AREA_LENGTH, CENTER_CIRCLE_DIAMETER, LEDColour
 
 from util.FieldGeometry import (
@@ -16,6 +17,9 @@ from util.FieldGeometry import (
     calculateTimeToReachBall,
     calculateTimeToReachPose,
 )
+
+
+
 
 from util.Timer import WallTimer
 from util import LedOverride
@@ -26,7 +30,8 @@ class FieldPlayer(BehaviourTask):
             "Stand": Stand(self),
             "Crouch": Crouch(self),
             "RaiseArm": RaiseArm(self),
-            "WalkInCircle": WalkInCircle(self)
+            "WalkInCircle": WalkInCircle(self),
+            "Kick": Kick(self)
         }
 
     def _reset(self):
@@ -34,16 +39,17 @@ class FieldPlayer(BehaviourTask):
         self._current_sub_task = "Stand"
 
     def _transition(self):
-        if (floor(time.time() - self._time) % 2 == 0):
-            self._current_sub_task = "Crouch"
-        elif (floor(time.time() - self._time) % 3 == 0):
-            self._current_sub_task = "RaiseArm"
-        else:
+        if (time.time() - self._time > 30):
+            pass
+        if (floor(time.time() - self._time) % 5 == 0):
+            robot.say("Attention Attention, this is an evacuation drill")
             self._current_sub_task = "WalkInCircle"
+        elif(floor(time.time() - self._time) % 5 == 2):
+            self._current_sub_task = "RaiseArm"
+    
 
     def _tick(self):
         # Tick sub task!
         self._tick_sub_task()
-
 
 
