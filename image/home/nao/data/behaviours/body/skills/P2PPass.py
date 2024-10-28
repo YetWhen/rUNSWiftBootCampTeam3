@@ -34,7 +34,7 @@ class P2PPass(BehaviourTask):
 
         elif self._current_sub_task == "Kick":
             if self._sub_tasks[self._current_sub_task].is_finished:
-                self._current_sub_task = "Stand"
+                #self._current_sub_task = "Stand"
                 self.has_finished_kick = True
 
     def _tick(self, pass_target=None, can_abort=True, lineup_dist=100, kickhard=False):
