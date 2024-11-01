@@ -2,6 +2,13 @@
 
 Welcome to the rUNSWift git repository.
 
+The code of each tasks are in separate branches, the file to look for the code is included in the corresponding README.file in each branch  
+Here follows the contribution  
+Tasks:  
+    1. Dance : Jashin and Sudam  
+    2. HeadFollowBall: Hayden and Jashin  
+    3. KickBall: Hayden  
+    4. WalkTowardsTheBall: Hayden and Sudam  
 
 ## Directory structure
 
