@@ -1,7 +1,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Welcome to the rUNSWift git repository.
-
+This repo is forked and used for rUNSWift bootscamp 2024
 The code of each tasks are in separate branches, the file to look for the code is included in the corresponding README.file in each branch  
 Here follows the contribution  
 Tasks:  
