@@ -1,7 +1,11 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Welcome to the rUNSWift git repository.
-
+## Edited Part  
+image/home/nao/data/behaviours/body/skills  
+P2PPass.py (imported from the 2024 code release)  
+image/home/nao/data/behaviours/body/roles  
+FieldPlayer.py (imported the get_teammate_pos function)  
 
 ## Directory structure
 
