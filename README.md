@@ -2,6 +2,10 @@
 
 Welcome to the rUNSWift git repository.
 
+## Edited part  
+image/home/nao/data/behaviours/head  
+MainHeadSkill.py  
+HeadTrackBall.py (duplicate and edited from HeadCentre.py)  
 
 ## Directory structure
 
