@@ -1,7 +1,15 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Welcome to the rUNSWift git repository.
-
+## Edited Part  
+image/home/nao/data/behaviours/body/roles  
+FieldPlayer.py  
+image/home/nao/data/behaviours/body/skills  
+PointBall.py  
+CircleReport.py (edited from the CircleToPose.py)  
+WalkToBallAndReport.py (edited from ApproachBall.py)  
+image/home/nao/data/pos  
+raiseArm.pos  (This part is finished by Sudam, which did not show in the commit history)  
 
 ## Directory structure
 
